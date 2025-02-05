@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <title>toDOList</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+<div class="d-flex justify-content-center">
+    <img src="gambar.png" style="width: 15em">
+  </div>
+  
+  
+<body class="d-flex flex-column h-100">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #ffe6f2; /* Warna pink muda */
+    }
+
+    header {
+      background-color: #ff66b2; /* Warna pink tua */
+      padding: 20px;
+      text-align: center;
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    h1 {
+      text-align: center;
+      color: #d63384;
+    }
+
+    table {
+      width: 80%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      background-color: white;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th, td {
+      border: 1px solid #ff66b2;
+      padding: 12px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #ff99cc;
+      color: white;
+      font-weight: bold;
+    }
+
+    tr:nth-child(even) {
+      background-color: #ffe6f2;
+    }
+
+    tr:hover {
+      background-color: #ffb3d9;
+      transition: 0.3s;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+  
+  <h1>toDOList</h1>
+
+
+  <table class="table" id="daftar">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">tugas</th>
+        <th scope="col">prioritas</th>
+        <th scope="col">status(selesai/belumselesai)</th>
+        <th scope="col">tanggal</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+
+  <img src="loader.gif" style="width: 5em; display: block" id="loader">
+
+  <a href="form-data-toDOList.html">toDOList</a>
+
+  <script type="module">
+    import { ambiltoDOList, hapustoDOList, ubahtoDOList } from './main.js';
+
+    $(document).ready(async function() {
+      let elemenDaftar = $("#daftar> tbody");
+      let daftartoDOList = await ambiltoDOList();
+      let nomor = 1;
+
+      daftartoDOList.forEach((data) => {
+        elemenDaftar.append(
+          '<tr>' +
+          '<th>' + nomor + '</th>' +
+          '<td>' + data.tugas+ '</td>' +
+          '<td>' + data.prioritas + '</td>' +
+          '<td>' + data.status + '</td>' + 
+          '<td>' + data.tanggal + '/<td>' +
+          '<td class="stack-up">' +
+          ' <a href="#" class="me-2 link-ubah"  data="' +
+          data.id +
+          '">ubah</a> ' +
+          ' <button class="btn btn-danger tombol-hapus" data="' +
+          data.id +
+          '">hapus</button>' + '</td>' +
+          '</tr>'
+        );
+        nomor = nomor + 1;
+      });
+      
+      $('#loader').hide();
+
+      $('.tombol-hapus').click(async function() {
+        $(this).attr('disabled', 'disabled');
+        $('#' + $(this).attr('data')).show();
+        await hapustoDOList($(this).attr('data'));
+        location.reload();
+      });
+      $('.link-ubah').click(async function() {
+        window.location.replace('ubah-stok-opname.html?docId=' + $(this).attr('data'));
+      })
+
+    });
+  </script>
+</body>
+
+</html>
