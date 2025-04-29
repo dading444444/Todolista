@@ -26,7 +26,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-export async function ambiltoDOList() {
+export async function ambildaptar() {
   const refDokumen = collection(db, "toDOList");
   const kueri = query(refDokumen, orderBy("toDOList"));
   const cuplikanKueri = await getDocs(kueri);
@@ -77,8 +77,5 @@ export async function ubahtoDOList(docId, tugas, prioritas, status, tanggal) {
 }
 
 export async function ambiltoDOList(docId) {
-  const docRef = await doc(db, "toDOList", docId);
-  const docSnap = await getDoc(docRef);
-  
-  return await docSnap.data();
+  const docRef = await doc(db, "toDOList", docId)
 }
