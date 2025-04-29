@@ -13,12 +13,13 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBbJDnmlNa2wObKWmQ6MLuXQ5KWbp0FDEA",
-  authDomain: "insan-cemerlang-8011b.firebaseapp.com",
-  projectId: "insan-cemerlang-8011b",
-  storageBucket: "insan-cemerlang-8011b.firebasestorage.app",
-  messagingSenderId: "642542638808",
-  appId: "1:642542638808:web:8dae3c0d85e3be8c5c29ad"
+  apiKey: "AIzaSyAZZzmOl8wJa2420wAoSMfDVTEKxj6tEqk",
+  authDomain: "aldi-eb45b.firebaseapp.com",
+  projectId: "aldi-eb45b",
+  storageBucket: "aldi-eb45b.firebasestorage.app",
+  messagingSenderId: "74072339126",
+  appId: "1:74072339126:web:37a27a2f60108fbe9f6c17",
+  measurementId: "G-SXG0MRRXS6"
 };
 
 
@@ -63,11 +64,9 @@ export async function tambahtugas(tugas, prioritas, status, tanggal) {
   }
 }
 
-export async function hapustugas(docId) {
-  await deleteDoc(doc(db, "toDOList", docId));
-}
 
-export async function ubahtoDOList(docId, tugas, prioritas, status, tanggal) {
+
+ export async function ubahtugas(docId, tugas, prioritas, status, tanggal) {
   await updateDoc(doc(db, "toDOList", docId),{
     tugas: tugas,
     prioritas: prioritas,
@@ -76,6 +75,9 @@ export async function ubahtoDOList(docId, tugas, prioritas, status, tanggal) {
   });
 }
 
-export async function ambidaftarltugas(docId) {
+export async function ambiltugas(docId) {
   const docRef = await doc(db, "toDOList", docId)
+}
+export async function hapustugas(docId) {
+  await deleteDoc(doc(db, "toDOList", docId));
 }

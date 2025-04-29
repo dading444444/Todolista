@@ -39,14 +39,12 @@
 
    <a href="tambah.html" class="tombol">tambah</a>
 
-   <script type="module">
-     import { ambildaftartugas,hapustugas } from './main.js';
-     
-     
+<script type="module">
+     import { ambildaftartugas, hapustugas } from './main.js';
 
      $(document).ready(async function() {
        let elemenDaftar = $("#daftar-tugas > tbody");
-       let daftartugas = await hapustugas();
+       let daftartugas = await ambildaftartugas();
        let nomor = 1;
        daftartugas.forEach((data) => {
          elemenDaftar.append(
