@@ -28,7 +28,7 @@ const db = getFirestore(app);
 
 export async function ambildaftartugas() {
   const refDokumen = collection(db, "toDOList");
-  const kueri = query(refDokumen, orderBy("toDOList"));
+  const kueri = query(refDokumen, orderBy("tugas"));
   const cuplikanKueri = await getDocs(kueri);
   
   let hasil = [];
@@ -63,7 +63,7 @@ export async function tambahtugas(tugas, prioritas, status, tanggal) {
   }
 }
 
-export async function ambiltugas(docId) {
+export async function hapustugas(docId) {
   await deleteDoc(doc(db, "toDOList", docId));
 }
 
