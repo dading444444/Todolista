@@ -23,3 +23,55 @@ const firebaseConfig = {
 };
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+export async function ambildaftartugas() {
+  const refDokumen = collection(db, "toDolis");
+  const kueri = query(refDokumen, orderBy("tugas"));
+  const cuplikankueri = await getDocs(kueri);
+
+  let hasil = [];
+  cuplikankueri.forEach((dok) => {
+    hasil.push({
+      id: dok.id,
+      tugas: dok.data().tugas,
+      status: dok.data().status,
+      prioritas: dok.data().prioritas,
+      tanggal: dok.data().tanggal,
+    });
+  });
+
+  return hasil;
+}
+
+export async function tambahtugas(tugas, status, prioritas, tanggal) {
+  try {
+    const dokRef = await addDoc(collection(db, 'toDolis'), {
+      tugas: tugas,
+      status: status,
+      prioritas: prioritas,
+      tanggal: tanggal,
+    });
+    console.log('berhasil menembah tugas ' + dokRef.id);
+  } catch (e) {
+    console.log('gagal menambah tugas ' + e);
+  }
+}
+
+export async function hapustugas(docId) {
+  await deleteDoc(doc(db, "toDolis", docId));
+}
+
+export async function ubahtugas(docId, tugas, status, prioritas, tanggal) {
+  await updateDoc(doc(db, "toDolis", docId), {
+    tugas: tugas,
+    status: status,
+    prioritas: prioritas,
+    tanggal: tanggal,
+  });
+}
+
+export async function ambiltugas(docId) {
+  const docRef = await doc(db, "toDolis", docId);
+  const docSnap = await getDoc(docRef);
+
+  return await docSnap.data();
+}
