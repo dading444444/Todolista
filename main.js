@@ -81,3 +81,52 @@ export async function ambiltugas(docId) {
 export async function hapustugas(docId) {
   await deleteDoc(doc(db, "toDOList", docId));
 }
+// Event listener untuk ubah tugas
+$(".ubah").click(async function() {
+  window.location.replace("ubahNama.html?docId=" + $(this).attr("data-id"));
+});
+// Event listener untuk ubah tugas
+$(".ubah").click(async function () {
+  window.location.replace("ubahtugas.html?docId=" + $(this).attr("data-id"));
+});
+
+// Gunakan event delegation agar berfungsi pada elemen dinamis
+$(document).on("click", ".btn-status", function () {
+  let tugasId = $(this).attr("data-id");
+  let statusSekarang = $(this).attr("data-status");
+  let statusBaru;
+
+  if (statusSekarang === "Belum Selesai") {
+    statusBaru = "Sedang Dikerjakan";
+  } else if (statusSekarang === "Sedang Dikerjakan") {
+    statusBaru = "Selesai";
+  } else {
+    statusBaru = "Belum Selesai";
+  }
+
+  // Update tampilan tombol
+  $(this).attr("data-status", statusBaru);
+  $(this).text(statusBaru);
+  updateWarnaStatus($(this), statusBaru);
+
+  // Tambahkan kode AJAX jika ingin menyimpan perubahan status ke database
+  console.log(`Status tugas ID ${tugasId} diubah menjadi ${statusBaru}`);
+});
+
+// Fungsi untuk memperbarui warna tombol berdasarkan status
+function updateWarnaStatus(button, status) {
+  if (status === "Belum Selesai") {
+    button.css("background-color", "#dc3545").css("color", "white");
+  } else if (status === "Sedang Dikerjakan") {
+    button.css("background-color", "#ffc107").css("color", "black");
+  } else {
+    button.css("background-color", "#28a745").css("color", "white");
+  }
+}
+
+// Atur warna status setelah halaman dimuat
+$(document).ready(function () {
+  $(".btn-status").each(function () {
+    updateWarnaStatus($(this), $(this).attr("data-status"));
+  });
+});
