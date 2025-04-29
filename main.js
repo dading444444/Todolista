@@ -26,7 +26,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-export async function ambildaptar() {
+export async function ambildaftartugas() {
   const refDokumen = collection(db, "toDOList");
   const kueri = query(refDokumen, orderBy("toDOList"));
   const cuplikanKueri = await getDocs(kueri);
@@ -49,7 +49,7 @@ export function formatAngka(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
 
-export async function tambahtoDOList(tugas, prioritas, status, tanggal) {
+export async function tambahtugas(tugas, prioritas, status, tanggal) {
   try {
     const dokRef = await addDoc(collection(db, 'toDOList'), {
       tugas:  tugas,
@@ -63,7 +63,7 @@ export async function tambahtoDOList(tugas, prioritas, status, tanggal) {
   }
 }
 
-export async function hapustoDOList(docId) {
+export async function ambiltugas(docId) {
   await deleteDoc(doc(db, "toDOList", docId));
 }
 
@@ -76,6 +76,6 @@ export async function ubahtoDOList(docId, tugas, prioritas, status, tanggal) {
   });
 }
 
-export async function ambiltoDOList(docId) {
+export async function ambidaftarltugas(docId) {
   const docRef = await doc(db, "toDOList", docId)
 }

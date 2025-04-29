@@ -44,7 +44,7 @@
 
      $(document).ready(async function() {
        let elemenDaftar = $("#daftar-tugas > tbody");
-       let daftartugas = await ambildaftartugas();
+       let daftartugas = await hapustugas();
        let nomor = 1;
        daftartugas.forEach((data) => {
          elemenDaftar.append(
